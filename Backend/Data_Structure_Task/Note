@@ -1,0 +1,20 @@
+Time Complexity for Queue (Using Arrays)
+Enqueue Operation:
+
+Time Complexity: O(1)
+Explanation: Adding an element to the rear of the queue involves simple index calculations and an array insertion, both of which take constant time.
+Dequeue Operation:
+
+Time Complexity: O(1)
+Explanation: Removing an element from the front of the queue involves simple index calculations and an array access, both of which are constant time operations.
+Max Priority Queue Implementation Using Binary Heap
+In the max priority queue, we use a binary heap to manage the elements based on their priorities. Here’s the updated time complexity for the operations:
+
+Insert Operation (Enqueue in priority queue context):
+
+Time Complexity: O(log N)
+Explanation: Inserting an element involves adding it to the end of the heap and then performing the heapifyUp operation to maintain the heap property. Both steps together take logarithmic time relative to the number of elements in the heap.
+Extract Max Operation (Dequeue in priority queue context):
+
+Time Complexity: O(log N)
+Explanation: Extracting the maximum element involves removing the root of the heap and then performing the heapifyDown operation to restore the heap property. Both steps together take logarithmic time relative to the number of elements in the heap.

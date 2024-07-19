@@ -1,0 +1,35 @@
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/posts")
+public class PostController {
+
+    @Autowired
+    private PostService postService;
+
+    @PostMapping
+    public Post addPost(@RequestBody Post post) {
+        return postService.addPost(post);
+    }
+
+    @GetMapping("/user/{userId}")
+    public Page<Post> listUserPosts(@PathVariable Long userId,
+                                    @RequestParam int page,
+                                    @RequestParam int size) {
+        return postService.listUserPosts(userId, page, size);
+    }
+
+    @GetMapping("/top")
+    public Page<Post> listTopPosts(@RequestParam int page,
+                                   @RequestParam int size) {
+        return postService.listTopPosts(page, size);
+    }
+
+    @PostMapping("/{postId}/reviews")
+    public Review addReviewToPost(@PathVariable Long postId,
+                                  @RequestBody Review review) {
+        return postService.addReviewToPost(postId, review);
+    }
+}

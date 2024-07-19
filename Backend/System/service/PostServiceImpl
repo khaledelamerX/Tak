@@ -1,0 +1,39 @@
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+@Service
+public class PostServiceImpl implements PostService {
+
+    @Autowired
+    private PostRepository postRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
+
+    @Override
+    public Post addPost(Post post) {
+        return postRepository.save(post);
+    }
+
+    @Override
+    public Page<Post> listUserPosts(Long userId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return postRepository.findAllByUserId(userId, pageable);
+    }
+
+    @Override
+    public Page<Post> listTopPosts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return postRepository.findTopPosts(pageable);
+    }
+
+    @Override
+    public Review addReviewToPost(Long postId, Review review) {
+        Post post = postRepository.findById(postId).orElseThrow();
+        review.setPost(post);
+        return reviewRepository.save(review);
+    }
+}

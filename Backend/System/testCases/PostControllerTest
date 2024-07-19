@@ -1,0 +1,42 @@
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@WebMvcTest(PostController.class)
+public class PostControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Test
+    public void testAddPost() throws Exception {
+        mockMvc.perform(post("/posts")
+                .contentType("application/json")
+                .content("{\"title\":\"Test Post\",\"body\":\"This is a test post\",\"user\":{\"id\":1}}"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testListUserPosts() throws Exception {
+        mockMvc.perform(get("/posts/user/1?page=0&size=10"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testListTopPosts() throws Exception {
+        mockMvc.perform(get("/posts/top?page=0&size=10"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testAddReviewToPost() throws Exception {
+        mockMvc.perform(post("/posts/1/reviews")
+                .contentType("application/json")
+                .content("{\"rating\":5,\"comment\":\"Great post!\",\"user\":{\"id\":1}}"))
+                .andExpect(status().isOk());
+    }
+}

@@ -1,0 +1,5 @@
+Performance Considerations:
+
+- Indexing: Ensure indexes on frequently queried columns like user_id in Post and post_id in Review.
+- Pagination: Efficiently handle large datasets using pagination for API endpoints.
+- Database Optimization: Optimize your database and queries to ensure they run efficiently.

@@ -1,0 +1,33 @@
+
+// Two Pass Method
+First Pass: Count the total number of nodes in the list.
+Second Pass: Traverse the list again to reach the middle node.
+
+
+function findMiddleNode(head):
+    // First pass to count the total number of nodes
+    count = 0
+    current = head
+    while current is not null:
+        count = count + 1
+        current = current.next
+
+    // Find the middle index
+    middleIndex = count // 2
+
+    // Second pass to find the middle node
+    current = head
+    for i from 0 to middleIndex:
+        current = current.next
+
+    return current
+
+    -----------------------------------------------------
+
+    Time Complexity
+Time Complexity: O(N)
+The first pass takes O(N) to count the nodes.
+The second pass takes O(N/2) which is O(N) in total.
+Space Complexity
+Space Complexity: O(1)
+We only use a few extra variables, regardless of the size of the list.

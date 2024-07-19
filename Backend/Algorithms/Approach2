@@ -1,0 +1,24 @@
+ // Two Pointer Method (Tortoise and Hare)
+Initialize two pointers: slow and fast. Both start at the head.
+Move: Move slow by one step and fast by two steps.
+When fast reaches the end: slow will be at the middle node.
+
+function findMiddleNode(head):
+    if head is null:
+        return null
+
+    slow = head
+    fast = head
+
+    while fast is not null and fast.next is not null:
+        slow = slow.next
+        fast = fast.next.next
+
+    return slow
+------------------------------------------
+Time Complexity
+Time Complexity: O(N)
+Both pointers traverse the list, but fast moves twice as fast. In the end, slow will be at the middle.
+Space Complexity
+Space Complexity: O(1)
+Only two pointers are used, regardless of the size of the list.

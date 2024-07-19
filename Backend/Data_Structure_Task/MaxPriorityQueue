@@ -1,0 +1,83 @@
+import java.util.Arrays;
+
+public class MaxPriorityQueue {
+    private static final int MAX_SIZE = 100;
+    private Element[] heap;
+    private int size;
+
+    public MaxPriorityQueue() {
+        heap = new Element[MAX_SIZE];
+        size = 0;
+    }
+
+    private static class Element {
+        int value;
+        int priority;
+
+        Element(int value, int priority) {
+            this.value = value;
+            this.priority = priority;
+        }
+    }
+
+    public void insert(int value, int priority) {
+        if (size == MAX_SIZE) {
+            System.out.println("Heap is full");
+            return;
+        }
+        heap[size] = new Element(value, priority);
+        size++;
+        heapifyUp(size - 1);
+    }
+
+    public int extractMax() {
+        if (size == 0) {
+            System.out.println("Heap is empty");
+            return -1; 
+        }
+        int maxElement = heap[0].value;
+        heap[0] = heap[size - 1];
+        size--;
+        heapifyDown(0);
+        return maxElement;
+    }
+
+    private void heapifyUp(int index) {
+        int parent = (index - 1) / 2;
+        if (index > 0 && heap[index].priority > heap[parent].priority) {
+            swap(index, parent);
+            heapifyUp(parent);
+        }
+    }
+
+    private void heapifyDown(int index) {
+        int largest = index;
+        int left = 2 * index + 1;
+        int right = 2 * index + 2;
+
+        if (left < size && heap[left].priority > heap[largest].priority) {
+            largest = left;
+        }
+        if (right < size && heap[right].priority > heap[largest].priority) {
+            largest = right;
+        }
+        if (largest != index) {
+            swap(index, largest);
+            heapifyDown(largest);
+        }
+    }
+
+    private void swap(int i, int j) {
+        Element temp = heap[i];
+        heap[i] = heap[j];
+        heap[j] = temp;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public int getSize() {
+        return size;
+    }
+}

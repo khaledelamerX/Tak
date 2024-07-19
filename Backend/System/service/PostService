@@ -1,0 +1,10 @@
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
+
+@Service
+public interface PostService {
+    Post addPost(Post post);
+    Page<Post> listUserPosts(Long userId, int page, int size);
+    Page<Post> listTopPosts(int page, int size);
+    Review addReviewToPost(Long postId, Review review);
+}

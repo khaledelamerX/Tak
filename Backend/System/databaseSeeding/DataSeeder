@@ -1,0 +1,44 @@
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+public class DataSeeder implements CommandLineRunner {
+
+    @Autowired
+    private PostRepository postRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Override
+    public void run(String... args) throws Exception {
+        // Seed Users
+        for (int i = 1; i <= 1000; i++) {
+            User user = new User();
+            user.setUsername("User" + i);
+            userRepository.save(user);
+        }
+
+        // Seed Posts
+        for (int i = 1; i <= 50000; i++) {
+            Post post = new Post();
+            post.setTitle("Title " + i);
+            post.setBody("Body " + i);
+            post.setUser(userRepository.findById((i % 1000) + 1).orElse(null));
+            postRepository.save(post);
+        }
+
+        // Seed Reviews
+        for (int i = 1; i <= 20000; i++) {
+            Review review = new Review();
+            review.setPost(postRepository.findById((i % 50000) + 1).orElse(null));
+            review.setUser(userRepository.findById((i % 1000) + 1).orElse(null));
+            review.setRating(1 + (i % 5));
+            review.setComment("Comment " + i);
+            reviewRepository.save(review);
+        }
+    }
+}
